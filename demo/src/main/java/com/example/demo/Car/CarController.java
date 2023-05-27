@@ -34,6 +34,11 @@ public class CarController {
         return carService.getCarByBodyType(bodyType);
     }
 
+    @GetMapping("/status/{status}")
+    public List<Car> getCarListByStatus(@PathVariable("status") String status) throws IllegalAccessException {
+        return carService.getCarListByStatus(status);
+    }
+
     @GetMapping("/fuel-type/{fuelType}")
     public List<Car> getCarByFuelType(@PathVariable("fuelType") String fuelType) throws IllegalAccessException {
         return carService.getCarByFuelType(fuelType);
@@ -78,10 +83,14 @@ public class CarController {
             @RequestParam(required = false) Integer fuelTankCapacity,
             @RequestParam(required = false) Integer maxSpeed,
             @RequestParam(required = false) String acceleration,
-            @RequestParam(required = false) String fuelConsumption){
+            @RequestParam(required = false) String fuelConsumption,
+            @RequestParam(required = false) String ownerFullName,
+            @RequestParam(required = false) String ownerCIN,
+            @RequestParam(required = false) String ownerEmail,
+            @RequestParam(required = false) String carDescription,
+            @RequestParam(required = false) String status){
         carService.updateCar(
                 carId, brand, model, year, bodyPaint, bodyType, fuelType, numberOfSeats, price, numberOfDoors,
-                warrantyDuration, width, height, length, fuelTankCapacity, maxSpeed, acceleration, fuelConsumption
-        );
+                warrantyDuration, width, height, length, fuelTankCapacity, maxSpeed, acceleration, fuelConsumption, ownerFullName,  ownerCIN,  ownerEmail,  carDescription,  status);
     }
 }

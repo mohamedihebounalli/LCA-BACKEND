@@ -55,6 +55,15 @@ public class CarService {
         }
         return carList;
     }
+
+    public List<Car> getCarListByStatus(String status) throws IllegalAccessException {
+        List<Car> carList = carRepository.findCarByStatus(status);
+        if(carList.size()==0){
+            throw new IllegalAccessException("Status do not exists");
+        }
+        return carList;
+    }
+
     public List<Car> getCars() {
         return carRepository.findAll();
     }
@@ -77,7 +86,7 @@ public class CarService {
 
 
     @Transactional
-    public void updateCar(Long carId,String brand,String model,String year,String bodyPaint,String bodyType,String fuelType,Integer numberOfSeats,Double price,Integer numberOfDoors,String warrantyDuration,Integer width,Integer height,Integer length,Integer fuelTankCapacity, Integer maxSpeed,String acceleration,String fuelConsumption) {
+    public void updateCar(Long carId,String brand,String model,String year,String bodyPaint,String bodyType,String fuelType,Integer numberOfSeats,Double price,Integer numberOfDoors,String warrantyDuration,Integer width,Integer height,Integer length,Integer fuelTankCapacity, Integer maxSpeed,String acceleration,String fuelConsumption,String ownerFullName,String ownerCIN,String ownerEmail,String carDescription,String status) {
         Car car = carRepository.findById(carId).orElseThrow(()-> new IllegalStateException("car with id "+ carId +" does not exist"));
         if (brand != null && brand.length() > 0 && !Objects.equals(car.getBrand(), brand)) {
             car.setBrand(brand);
@@ -148,10 +157,30 @@ public class CarService {
         }
 
 
+        if (ownerFullName != null && ownerFullName.length() > 0 && !Objects.equals(car.getOwnerFullName(), ownerFullName)) {
+            car.setOwnerFullName(ownerFullName);
+        }
+
+        if (ownerCIN != null && ownerCIN.length() > 0 && !Objects.equals(car.getOwnerCIN(), ownerCIN)) {
+            car.setOwnerCIN(ownerCIN);
+        }
+
+        if (ownerEmail != null && ownerEmail.length() > 0 && !Objects.equals(car.getOwnerEmail(), ownerEmail)) {
+            car.setOwnerEmail(ownerEmail);
+        }
+
+        if (carDescription != null && carDescription.length() > 0 && !Objects.equals(car.getCarDescription(), carDescription)) {
+            car.setCarDescription(carDescription);
+        }
+
+        if (status != null && status.length() > 0 && !Objects.equals(car.getStatus(), status)) {
+            car.setStatus(status);
+        }
+
         if(model != null && model.length() > 0 && !Objects.equals(car.getModel(),model)){
             Optional<Car> carOptional = carRepository.findCarByModel(model);
             if(carOptional.isPresent()){
-                throw new IllegalStateException("email already taken");
+                throw new IllegalStateException("model already taken");
             }
             car.setModel(model);
         }
@@ -160,4 +189,5 @@ public class CarService {
     public List<Car> sortCarListByPrice(String field) {
         return carRepository.findAll(Sort.by(Sort.Direction.ASC,field));
     }
+
 }

@@ -19,7 +19,52 @@ public class Car {
     )
     private Long id;
 
+    private String ownerFullName;
+    private String ownerCIN;
+    private String ownerEmail;
+    private String carDescription;
+    private String status;
     private String brand;
+
+    public String getOwnerFullName() {
+        return ownerFullName;
+    }
+
+    public void setOwnerFullName(String ownerFullName) {
+        this.ownerFullName = ownerFullName;
+    }
+
+    public String getOwnerCIN() {
+        return ownerCIN;
+    }
+
+    public void setOwnerCIN(String ownerCIN) {
+        this.ownerCIN = ownerCIN;
+    }
+
+    public String getOwnerEmail() {
+        return ownerEmail;
+    }
+
+    public void setOwnerEmail(String ownerEmail) {
+        this.ownerEmail = ownerEmail;
+    }
+
+    public String getCarDescription() {
+        return carDescription;
+    }
+
+    public void setCarDescription(String carDescription) {
+        this.carDescription = carDescription;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
 
     private String model;
 
@@ -230,8 +275,13 @@ public class Car {
         this.transmission = transmission;
     }
 
-    public Car(Long id, String brand, String model, String year, String bodyPaint, String bodyType, String fuelType, Integer numberOfSeats, Double price, Integer numberOfDoors, String warrantyDuration, Integer width, Integer height, Integer length, Integer fuelTankCapacity, Integer maxSpeed, String acceleration, String fuelConsumption, List<Equipment> equipment, Engine engine, Transmission transmission) {
+    public Car(Long id, String ownerFullName, String ownerCIN, String ownerEmail, String carDescription, String status, String brand, String model, String year, String bodyPaint, String bodyType, String fuelType, Integer numberOfSeats, Double price, Integer numberOfDoors, String warrantyDuration, Integer width, Integer height, Integer length, Integer fuelTankCapacity, Integer maxSpeed, String acceleration, String fuelConsumption, List<Equipment> equipment, Engine engine, Transmission transmission) {
         this.id = id;
+        this.ownerFullName = ownerFullName;
+        this.ownerCIN = ownerCIN;
+        this.ownerEmail = ownerEmail;
+        this.carDescription = carDescription;
+        this.status = status;
         this.brand = brand;
         this.model = model;
         this.year = year;
@@ -253,6 +303,7 @@ public class Car {
         this.engine = engine;
         this.transmission = transmission;
     }
+
 
     public Car() {
     }
