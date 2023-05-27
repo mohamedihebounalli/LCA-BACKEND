@@ -35,13 +35,14 @@ public class AfterSaleServiceRequestController {
     @PutMapping(path="{requestId}")
     public void updateRequest(
             @PathVariable("requestId") Long requestId,
-            @RequestBody(required = false) String CIN,
-            @RequestBody(required = false) String firstName,
-            @RequestBody(required = false) String lastName,
-            @RequestBody(required = false) String manufacturer,
-            @RequestBody(required = false) String registrationNumber,
-            @RequestBody(required = false) String description){
-        afterSaleServiceRequestService.updateRequest(requestId, CIN,firstName, lastName,  manufacturer,  registrationNumber,  description );
+            @RequestParam(required = false) String CIN,
+            @RequestParam(required = false) String firstName,
+            @RequestParam(required = false) String lastName,
+            @RequestParam(required = false) String manufacturer,
+            @RequestParam(required = false) String registrationNumber,
+            @RequestParam(required = false) String description,
+            @RequestParam(required = false) String status){
+        afterSaleServiceRequestService.updateRequest(requestId, CIN,firstName, lastName,  manufacturer,  registrationNumber,  description,status );
     }
 
 }

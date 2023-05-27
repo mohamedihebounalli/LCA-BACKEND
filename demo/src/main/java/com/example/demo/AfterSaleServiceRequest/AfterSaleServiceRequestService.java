@@ -41,7 +41,7 @@ public class AfterSaleServiceRequestService {
     }
 
     @Transactional
-    public void updateRequest(Long requestId, String CIN,String firstName, String lastName, String manufacturer, String registrationNumber, String  description) {
+    public void updateRequest(Long requestId, String CIN,String firstName, String lastName, String manufacturer, String registrationNumber, String  description,String status) {
         AfterSaleServiceRequest request = afterSaleServiceRequestRepository.findById(requestId).orElseThrow(()-> new IllegalStateException("Request with id "+ requestId +" does not exist"));
 
 
@@ -60,6 +60,11 @@ public class AfterSaleServiceRequestService {
         if(description != null && description.length() > 0 && !Objects.equals(request.getDescription(),description)){
             request.setDescription(description);
         }
+
+        if(status != null && status.length() > 0 && !Objects.equals(request.getStatus(),status)){
+            request.setStatus(status);
+        }
+
         if(registrationNumber != null && registrationNumber.length() > 0 && !Objects.equals(request.getRegistrationNumber(),registrationNumber)){
             Optional<AfterSaleServiceRequest> requestOptional = afterSaleServiceRequestRepository.findAfterSaleServiceRequestByRegistrationNumber(registrationNumber);
             if(requestOptional.isPresent()){

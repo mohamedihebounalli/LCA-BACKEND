@@ -53,6 +53,11 @@ public class SaleService {
         if(lastName != null && lastName.length() > 0 && !Objects.equals(sale.getLastName(),lastName)){
             sale.setLastName(lastName);
         }
+
+        if(paymentMethod != null && paymentMethod.length() > 0 && !Objects.equals(sale.getPaymentMethod(),paymentMethod)){
+            sale.setPaymentMethod(paymentMethod);
+        }
+
         if(price != null && price.length() > 0 && !Objects.equals(sale.getPrice(),price)){
             sale.setPrice(price);
         }

@@ -2,6 +2,7 @@ package com.example.demo.account;
 
 import jakarta.persistence.*;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 @Entity
@@ -20,7 +21,7 @@ public class Account {
     private Long id;
     private String firstName;
     private String lastName;
-    private Date dateOfBirth;
+    private LocalDate dateOfBirth;
     private String phoneNumber;
     private String email;
     private String role;
@@ -54,11 +55,11 @@ public class Account {
         this.lastName = lastName;
     }
 
-    public Date getDateOfBirth() {
+    public LocalDate getDateOfBirth() {
         return dateOfBirth;
     }
 
-    public void setDateOfBirth(Date dateOfBirth) {
+    public void setDateOfBirth(LocalDate dateOfBirth) {
         this.dateOfBirth = dateOfBirth;
     }
 
@@ -86,11 +87,11 @@ public class Account {
         this.role = role;
     }
 
-    public Account(Long id, String firstName, String lastName, Date dateOfBirth, String phoneNumber, String email, String role) {
+    public Account(Long id, String firstName, String lastName, LocalDate dateOfBirth, String phoneNumber, String email, String role) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
-        this.dateOfBirth = dateOfBirth;
+        this.setDateOfBirth(dateOfBirth);
         this.phoneNumber = phoneNumber;
         this.email = email;
         this.role = role;

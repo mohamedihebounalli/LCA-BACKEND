@@ -22,6 +22,16 @@ public class AfterSaleServiceRequest {
     private String manufacturer;
     private String registrationNumber;
     private String description;
+    private String status="Pending";
+
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
 
     public AfterSaleServiceRequest() {
 

@@ -44,6 +44,11 @@ public class CarController {
         return carService.getCarByBodyPaint(bodyPaint);
     }
 
+    @GetMapping("/sort-by/{field}")
+    public List <Car> sortCarListByPrice(@PathVariable("field") String field){
+        return carService.sortCarListByPrice(field);
+    }
+
     @PostMapping
     public void RegisterNewCar(@RequestBody Car car) throws IllegalAccessException {
         carService.addNewCars(car);
@@ -57,23 +62,23 @@ public class CarController {
     @PutMapping(path="{carId}")
     public void updateCar(
             @PathVariable("carId") Long carId,
-            @RequestBody(required = false) String brand,
-            @RequestBody(required = false) String model,
-            @RequestBody(required = false) String year,
-            @RequestBody(required = false) String bodyPaint,
-            @RequestBody(required = false) String bodyType,
-            @RequestBody(required = false) String fuelType,
-            @RequestBody(required = false) Integer numberOfSeats,
-            @RequestBody(required = false) Double price,
-            @RequestBody(required = false) Integer numberOfDoors,
-            @RequestBody(required = false) String warrantyDuration,
-            @RequestBody(required = false) Integer width,
-            @RequestBody(required = false) Integer height,
-            @RequestBody(required = false) Integer length,
-            @RequestBody(required = false) Integer fuelTankCapacity,
-            @RequestBody(required = false) Integer maxSpeed,
-            @RequestBody(required = false) String acceleration,
-            @RequestBody(required = false) String fuelConsumption){
+            @RequestParam(required = false) String brand,
+            @RequestParam(required = false) String model,
+            @RequestParam(required = false) String year,
+            @RequestParam(required = false) String bodyPaint,
+            @RequestParam(required = false) String bodyType,
+            @RequestParam(required = false) String fuelType,
+            @RequestParam(required = false) Integer numberOfSeats,
+            @RequestParam(required = false) Double price,
+            @RequestParam(required = false) Integer numberOfDoors,
+            @RequestParam(required = false) String warrantyDuration,
+            @RequestParam(required = false) Integer width,
+            @RequestParam(required = false) Integer height,
+            @RequestParam(required = false) Integer length,
+            @RequestParam(required = false) Integer fuelTankCapacity,
+            @RequestParam(required = false) Integer maxSpeed,
+            @RequestParam(required = false) String acceleration,
+            @RequestParam(required = false) String fuelConsumption){
         carService.updateCar(
                 carId, brand, model, year, bodyPaint, bodyType, fuelType, numberOfSeats, price, numberOfDoors,
                 warrantyDuration, width, height, length, fuelTankCapacity, maxSpeed, acceleration, fuelConsumption

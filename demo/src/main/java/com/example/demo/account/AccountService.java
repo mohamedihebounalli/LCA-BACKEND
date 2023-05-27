@@ -4,7 +4,7 @@ import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Date;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
@@ -44,7 +44,7 @@ public class AccountService {
     }
 
     @Transactional
-    public void updateAccount(Long accountId, String firstName, String lastName, Date dateOfBirth, String phoneNumber, String email, String role) {
+    public void updateAccount(Long accountId, String firstName, String lastName, LocalDate dateOfBirth, String phoneNumber, String email, String role) {
     Account account = accountRepository.findById(accountId).orElseThrow(()-> new IllegalStateException("account with id "+ accountId +" does not exist"));
     if(firstName != null && firstName.length() > 0 && !Objects.equals(account.getFirstName(),firstName)){
         account.setFirstName(firstName);
@@ -58,6 +58,11 @@ public class AccountService {
         if(role != null && role.length() > 0 && !Objects.equals(account.getRole(),role)){
             account.setRole(role);
         }
+
+        if (dateOfBirth != null && !Objects.equals(account.getDateOfBirth(), dateOfBirth)) {
+            account.setDateOfBirth(dateOfBirth);
+        }
+
         if(email != null && email.length() > 0 && !Objects.equals(account.getEmail(),email)){
             Optional<Account> accountOptional = accountRepository.findAccountByEmail(email);
             if(accountOptional.isPresent()){

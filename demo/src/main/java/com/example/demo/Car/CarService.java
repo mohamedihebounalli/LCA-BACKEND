@@ -3,6 +3,7 @@ package com.example.demo.Car;
 
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -156,4 +157,7 @@ public class CarService {
         }
     }
 
+    public List<Car> sortCarListByPrice(String field) {
+        return carRepository.findAll(Sort.by(Sort.Direction.ASC,field));
+    }
 }
