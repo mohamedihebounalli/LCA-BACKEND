@@ -39,6 +39,11 @@ public class CarController {
         return carService.getCarByFuelType(fuelType);
     }
 
+    @GetMapping("/body-paint/{bodyPaint}")
+    public List<Car> getCarByBodyPaint(@PathVariable("bodyPaint") String bodyPaint) throws IllegalAccessException {
+        return carService.getCarByBodyPaint(bodyPaint);
+    }
+
     @PostMapping
     public void RegisterNewCar(@RequestBody Car car) throws IllegalAccessException {
         carService.addNewCars(car);

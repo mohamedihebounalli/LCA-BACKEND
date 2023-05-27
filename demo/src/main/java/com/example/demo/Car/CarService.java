@@ -47,6 +47,13 @@ public class CarService {
     }
 
 
+    public List<Car> getCarByBodyPaint(String BodyPaint) throws IllegalAccessException {
+        List<Car> carList = carRepository.findCarByBodyPaint(BodyPaint);
+        if(carList.size()==0){
+            throw new IllegalAccessException("BodyPaint do not exists");
+        }
+        return carList;
+    }
     public List<Car> getCars() {
         return carRepository.findAll();
     }
