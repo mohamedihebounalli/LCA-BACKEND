@@ -1,11 +1,14 @@
 package com.example.demo.Car;
 
 import jakarta.persistence.*;
+import lombok.Builder;
+import lombok.Data;
 
 import java.util.List;
 
 @Entity
 @Table
+@Data
 public class Car {
     @Id
     @SequenceGenerator(
@@ -25,7 +28,6 @@ public class Car {
     private String carDescription;
     private String status;
     private String brand;
-
     private String model;
     private String year;
     private String bodyPaint;
@@ -43,8 +45,11 @@ public class Car {
     private String acceleration;
     private String fuelConsumption;
     private Integer taxHorsepower;
-
     private String transmissionType;
+    @Lob
+    private byte[] carImageData;
+
+
     public Integer getTaxHorsepower() {
         return taxHorsepower;
     }

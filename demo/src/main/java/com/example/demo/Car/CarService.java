@@ -5,7 +5,9 @@ import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
@@ -211,5 +213,24 @@ public class CarService {
     public List<Car> sortCarListByPrice(String field) {
         return carRepository.findAll(Sort.by(Sort.Direction.ASC,field));
     }
+
+    @Transactional
+    public String uploadImage(MultipartFile file,Long carId) throws IOException {
+        Car car = carRepository.findById(carId).orElseThrow(()-> new IllegalStateException("car with id "+ carId +" does not exist"));
+        car.setCarImageData(ImageUtils.compressImage(file.getBytes()));
+        if (car != null) {
+            return "file uploaded successfully ";
+        }
+        return null;
+    }
+
+
+    public byte[] downloadImage(Long id) {
+        Optional<Car> carOptional = carRepository.findById(id);
+        byte[] images = ImageUtils.decompressImage(carOptional.get().getCarImageData());
+        return images;
+    }
+
+
 
 }

@@ -3,8 +3,13 @@ package com.example.demo.Car;
 import com.example.demo.account.Account;
 import jakarta.websocket.server.PathParam;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.Date;
 import java.util.List;
 
@@ -22,6 +27,10 @@ public class CarController {
     public List<Car> getCars() {
         return carService.getCars();
     }
+
+
+
+
 
 
     @GetMapping("/transmission-type/{transmissionType}")
@@ -106,4 +115,21 @@ public class CarController {
                 carId, brand, model, year, bodyPaint, bodyType, fuelType, numberOfSeats, price, numberOfDoors,
                 warrantyDuration, width, height, length, fuelTankCapacity, maxSpeed, acceleration, fuelConsumption, ownerFullName,  ownerCIN,  ownerEmail,  carDescription,  status,phoneNumber);
     }
+
+
+    @PostMapping("/upload-car-image/{id}")
+    public ResponseEntity<?> uploadImage(@RequestParam("image") MultipartFile file,@PathVariable("id") Long id) throws IOException {
+        String uploadImage = carService.uploadImage(file,id);
+        return ResponseEntity.status(HttpStatus.OK)
+                .body(uploadImage);
+    }
+
+    @GetMapping("/download-car-image/{id}")
+    public ResponseEntity<?> downloadImage(@PathVariable Long id){
+        byte[] imageData=carService.downloadImage(id);
+        return ResponseEntity.status(HttpStatus.OK)
+                .contentType(MediaType.valueOf("image/png"))
+                .body(imageData);
+    }
+
 }
