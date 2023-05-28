@@ -23,7 +23,6 @@ public class Transmission {
 
     private String gearboxType;
 
-    private String transmissionType;
 
     private Integer numOfGears;
 
@@ -31,11 +30,9 @@ public class Transmission {
     @JoinColumn(name = "car_id")
     private Car car;
 
-    public Transmission(Long id, String gearboxType, String transmissionType, Integer numOfGears, Car car) {
+    public Transmission(Long id, String gearboxType, Integer numOfGears, Car car) {
         this.id = id;
-
         this.gearboxType = gearboxType;
-        this.transmissionType = transmissionType;
         this.numOfGears = numOfGears;
         this.car = car;
     }
@@ -58,14 +55,6 @@ public class Transmission {
 
     public void setGearboxType(String gearboxType) {
         this.gearboxType = gearboxType;
-    }
-
-    public String getTransmissionType() {
-        return transmissionType;
-    }
-
-    public void setTransmissionType(String transmissionType) {
-        this.transmissionType = transmissionType;
     }
 
     public Integer getNumOfGears() {

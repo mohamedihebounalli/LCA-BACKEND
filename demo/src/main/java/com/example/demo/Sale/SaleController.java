@@ -41,7 +41,8 @@ public class SaleController {
             @RequestParam(required = false) String manufacturer,
             @RequestParam(required = false) String carColor,
             @RequestParam(required = false) String  paymentMethod,
-            @RequestParam(required = false) String price){
-        saleService.updateSale(saleId,firstName,lastName,manufacturer,carColor,paymentMethod,price);
+            @RequestParam(required = false) String price,
+            @RequestParam(required = false) String ownerCIN){
+        saleService.updateSale(saleId,firstName,lastName,manufacturer,carColor,paymentMethod,price,ownerCIN);
     }
 }

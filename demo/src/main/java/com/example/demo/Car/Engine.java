@@ -17,7 +17,6 @@ public class Engine {
     )
     private Long id;
 
-
     private Double numOfCylinders;
 
     private String fuelType;
@@ -28,13 +27,13 @@ public class Engine {
 
     private Integer horsepower;
 
-    private Integer taxHorsepower;
+
 
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "car_id")
     private Car car;
 
-    public Engine(Long id, Double numOfCylinders, String fuelType, Double engineSize, String torque, Integer horsepower, Integer taxHorsepower, Car car) {
+    public Engine(Long id, Double numOfCylinders, String fuelType, Double engineSize, String torque, Integer horsepower, Car car) {
         this.id = id;
 
         this.numOfCylinders = numOfCylinders;
@@ -42,8 +41,11 @@ public class Engine {
         this.engineSize = engineSize;
         this.torque = torque;
         this.horsepower = horsepower;
-        this.taxHorsepower = taxHorsepower;
         this.car = car;
+    }
+
+    public Engine() {
+
     }
 
     public Long getId() {
@@ -92,14 +94,6 @@ public class Engine {
 
     public void setHorsepower(Integer horsepower) {
         this.horsepower = horsepower;
-    }
-
-    public Integer getTaxHorsepower() {
-        return taxHorsepower;
-    }
-
-    public void setTaxHorsepower(Integer taxHorsepower) {
-        this.taxHorsepower = taxHorsepower;
     }
 
     public Car getCar() {

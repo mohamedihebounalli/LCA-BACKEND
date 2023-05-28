@@ -26,6 +26,52 @@ public class Car {
     private String status;
     private String brand;
 
+    private String model;
+    private String year;
+    private String bodyPaint;
+    private String bodyType;
+    private String fuelType;
+    private Integer numberOfSeats;
+    private Double price;
+    private Integer numberOfDoors;
+    private String warrantyDuration;
+    private Integer width;
+    private Integer height;
+    private Integer length;
+    private Integer fuelTankCapacity;
+    private Integer maxSpeed;
+    private String acceleration;
+    private String fuelConsumption;
+    private Integer taxHorsepower;
+
+    private String transmissionType;
+    public Integer getTaxHorsepower() {
+        return taxHorsepower;
+    }
+
+    public void setTaxHorsepower(Integer taxHorsepower) {
+        this.taxHorsepower = taxHorsepower;
+    }
+
+    public String getTransmissionType() {
+        return transmissionType;
+    }
+
+    public void setTransmissionType(String transmissionType) {
+        this.transmissionType = transmissionType;
+    }
+
+
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
+    }
+
+    private String phoneNumber;
+
     public String getOwnerFullName() {
         return ownerFullName;
     }
@@ -66,37 +112,6 @@ public class Car {
         this.status = status;
     }
 
-    private String model;
-
-    private String year;
-
-    private String bodyPaint;
-
-    private String bodyType;
-
-    private String fuelType;
-
-    private Integer numberOfSeats;
-
-    private Double price;
-
-    private Integer numberOfDoors;
-
-    private String warrantyDuration;
-
-    private Integer width;
-
-    private Integer height;
-
-    private Integer length;
-
-    private Integer fuelTankCapacity;
-
-    private Integer maxSpeed;
-
-    private String acceleration;
-
-    private String fuelConsumption;
 
     @OneToMany(mappedBy = "car", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Equipment> equipment;
@@ -275,7 +290,12 @@ public class Car {
         this.transmission = transmission;
     }
 
-    public Car(Long id, String ownerFullName, String ownerCIN, String ownerEmail, String carDescription, String status, String brand, String model, String year, String bodyPaint, String bodyType, String fuelType, Integer numberOfSeats, Double price, Integer numberOfDoors, String warrantyDuration, Integer width, Integer height, Integer length, Integer fuelTankCapacity, Integer maxSpeed, String acceleration, String fuelConsumption, List<Equipment> equipment, Engine engine, Transmission transmission) {
+    public Car(Long id, String ownerFullName, String ownerCIN, String ownerEmail, String carDescription,
+               String status, String brand, String model, String year, String bodyPaint, String bodyType,
+               String fuelType, Integer numberOfSeats, Double price, Integer numberOfDoors, String warrantyDuration,
+               Integer width, Integer height, Integer length, Integer fuelTankCapacity, Integer maxSpeed,
+               String acceleration, String fuelConsumption, List<Equipment> equipment, Engine engine,
+               Transmission transmission,String phoneNumber,Integer taxHorsepower,String transmissionType) {
         this.id = id;
         this.ownerFullName = ownerFullName;
         this.ownerCIN = ownerCIN;
@@ -302,6 +322,9 @@ public class Car {
         this.equipment = equipment;
         this.engine = engine;
         this.transmission = transmission;
+        this.phoneNumber = phoneNumber;
+        this.taxHorsepower = taxHorsepower;
+        this.transmissionType = transmissionType;
     }
 
 

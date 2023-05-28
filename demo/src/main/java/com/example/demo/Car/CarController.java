@@ -23,6 +23,18 @@ public class CarController {
         return carService.getCars();
     }
 
+
+    @GetMapping("/transmission-type/{transmissionType}")
+    public List<Car> getCarByTransmissionType(@PathVariable("transmissionType") String transmissionType) throws IllegalAccessException {
+        return carService.getCarByTransmissionType(transmissionType);
+    }
+
+    @GetMapping("/tax-horse-power/{taxHorsepower}")
+    public List<Car> getCarByTaxHorseower(@PathVariable("taxHorsepower") Integer taxHorsepower) throws IllegalAccessException {
+        return carService.getCarByTaxHorsepower(taxHorsepower);
+    }
+
+
     @GetMapping("/number-of-seets/{numberOfSeats}")
     public List<Car> getCarByNumberOfSeats(@PathVariable("numberOfSeats") Integer numberOfSeats) throws IllegalAccessException {
         return carService.getCarByNumberOfSeats(numberOfSeats);
@@ -88,9 +100,10 @@ public class CarController {
             @RequestParam(required = false) String ownerCIN,
             @RequestParam(required = false) String ownerEmail,
             @RequestParam(required = false) String carDescription,
-            @RequestParam(required = false) String status){
+            @RequestParam(required = false) String status,
+            @RequestParam(required = false) String phoneNumber){
         carService.updateCar(
                 carId, brand, model, year, bodyPaint, bodyType, fuelType, numberOfSeats, price, numberOfDoors,
-                warrantyDuration, width, height, length, fuelTankCapacity, maxSpeed, acceleration, fuelConsumption, ownerFullName,  ownerCIN,  ownerEmail,  carDescription,  status);
+                warrantyDuration, width, height, length, fuelTankCapacity, maxSpeed, acceleration, fuelConsumption, ownerFullName,  ownerCIN,  ownerEmail,  carDescription,  status,phoneNumber);
     }
 }

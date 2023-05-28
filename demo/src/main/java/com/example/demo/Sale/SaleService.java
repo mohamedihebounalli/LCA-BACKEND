@@ -44,7 +44,7 @@ public class SaleService {
     }
 
     @Transactional
-    public void updateSale(Long saleId, String firstName, String lastName, String manufacturer, String carColor, String  paymentMethod, String price) {
+    public void updateSale(Long saleId, String firstName, String lastName, String manufacturer, String carColor, String  paymentMethod, String price,String ownerCIN) {
         Sale sale = saleRepository.findById(saleId).orElseThrow(()-> new IllegalStateException("sale with id "+ saleId +" does not exist"));
 
         if(firstName != null && firstName.length() > 0 && !Objects.equals(sale.getFirstName(),firstName)){
@@ -64,6 +64,10 @@ public class SaleService {
         if(carColor != null && carColor.length() > 0 && !Objects.equals(sale.getCarColor(),carColor)){
             sale.setCarColor(carColor);
         }
+        if(ownerCIN != null && ownerCIN.length() > 0 && !Objects.equals(sale.getOwnerCIN(),ownerCIN)){
+            sale.setOwnerCIN(ownerCIN);
+        }
+
         if(manufacturer != null && manufacturer.length() > 0 && !Objects.equals(sale.getManufacturer(),manufacturer)){
             Optional<Sale> saleOptional = saleRepository.findSaleByManufacturer(manufacturer);
             if(saleOptional.isPresent()){

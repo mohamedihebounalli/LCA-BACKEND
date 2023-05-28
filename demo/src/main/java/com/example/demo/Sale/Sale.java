@@ -22,6 +22,16 @@ public class Sale {
     private String carColor ;
     private String  paymentMethod;
     private String price;
+    private String ownerCIN;
+    public String getOwnerCIN() {
+        return ownerCIN;
+    }
+
+    public void setOwnerCIN(String ownerCIN) {
+        this.ownerCIN = ownerCIN;
+    }
+
+
 
     public Sale() {
 
@@ -83,7 +93,7 @@ public class Sale {
         this.price = price;
     }
 
-    public Sale(Long id, String firstName, String lastName, String manufacturer, String carColor, String paymentMethod, String price) {
+    public Sale(Long id, String firstName, String lastName, String manufacturer, String carColor, String paymentMethod, String price,String ownerCIN) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -91,5 +101,6 @@ public class Sale {
         this.carColor = carColor;
         this.paymentMethod = paymentMethod;
         this.price = price;
+        this.ownerCIN=ownerCIN;
     }
 }

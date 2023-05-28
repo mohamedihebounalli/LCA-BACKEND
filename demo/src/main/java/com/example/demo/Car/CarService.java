@@ -23,6 +23,21 @@ public class CarService {
 //        this.accounts = accounts;
     }
 
+
+    public List<Car> getCarByTaxHorsepower(Integer taxHorsepower) throws IllegalAccessException {
+        List<Car> carList = carRepository.findCarByTaxHorsepower(taxHorsepower);
+        if(carList.size()==0){
+            throw new IllegalAccessException("TaxHorsepower do not exists");
+        }
+        return carList;
+    }
+    public List<Car> getCarByTransmissionType(String transmissionType) throws IllegalAccessException {
+        List<Car> carList = carRepository.findCarByTransmissionType(transmissionType);
+        if(carList.size()==0){
+            throw new IllegalAccessException("transmissionType do not exists");
+        }
+        return carList;
+    }
     public List<Car> getCarByNumberOfSeats(Integer numberOfSeats) throws IllegalAccessException {
         List<Car> carList = carRepository.findCarByNumberOfSeats(numberOfSeats);
         if(carList.size()==0){
@@ -46,7 +61,6 @@ public class CarService {
         }
         return carList;
     }
-
 
     public List<Car> getCarByBodyPaint(String BodyPaint) throws IllegalAccessException {
         List<Car> carList = carRepository.findCarByBodyPaint(BodyPaint);
@@ -86,7 +100,13 @@ public class CarService {
 
 
     @Transactional
-    public void updateCar(Long carId,String brand,String model,String year,String bodyPaint,String bodyType,String fuelType,Integer numberOfSeats,Double price,Integer numberOfDoors,String warrantyDuration,Integer width,Integer height,Integer length,Integer fuelTankCapacity, Integer maxSpeed,String acceleration,String fuelConsumption,String ownerFullName,String ownerCIN,String ownerEmail,String carDescription,String status) {
+    public void updateCar(Long carId,String brand,String model,String year,
+                          String bodyPaint,String bodyType,String fuelType,
+                          Integer numberOfSeats,Double price,Integer numberOfDoors,
+                          String warrantyDuration,Integer width,Integer height,Integer length,
+                          Integer fuelTankCapacity, Integer maxSpeed,String acceleration,
+                          String fuelConsumption,String ownerFullName,String ownerCIN,
+                          String ownerEmail,String carDescription,String status ,String phoneNumber) {
         Car car = carRepository.findById(carId).orElseThrow(()-> new IllegalStateException("car with id "+ carId +" does not exist"));
         if (brand != null && brand.length() > 0 && !Objects.equals(car.getBrand(), brand)) {
             car.setBrand(brand);
@@ -176,7 +196,9 @@ public class CarService {
         if (status != null && status.length() > 0 && !Objects.equals(car.getStatus(), status)) {
             car.setStatus(status);
         }
-
+        if (phoneNumber != null && phoneNumber.length() > 0 && !Objects.equals(car.getPhoneNumber(), phoneNumber)) {
+            car.setPhoneNumber(phoneNumber);
+        }
         if(model != null && model.length() > 0 && !Objects.equals(car.getModel(),model)){
             Optional<Car> carOptional = carRepository.findCarByModel(model);
             if(carOptional.isPresent()){
