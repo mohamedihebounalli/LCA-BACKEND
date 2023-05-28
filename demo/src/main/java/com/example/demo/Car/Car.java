@@ -1,14 +1,19 @@
 package com.example.demo.Car;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.util.List;
 
 @Entity
 @Table
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class Car {
     @Id
     @SequenceGenerator(
@@ -48,6 +53,7 @@ public class Car {
     private String transmissionType;
     @Lob
     private byte[] carImageData;
+    private String phoneNumber;
 
 
     public Integer getTaxHorsepower() {
@@ -66,7 +72,6 @@ public class Car {
         this.transmissionType = transmissionType;
     }
 
-
     public String getPhoneNumber() {
         return phoneNumber;
     }
@@ -74,8 +79,6 @@ public class Car {
     public void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
     }
-
-    private String phoneNumber;
 
     public String getOwnerFullName() {
         return ownerFullName;
@@ -295,6 +298,58 @@ public class Car {
         this.transmission = transmission;
     }
 
+    //Used Cars Constructor
+    public Car(String ownerFullName, String ownerCIN, String ownerEmail,String phoneNumber,
+               String carDescription, String status, String model
+
+    ){
+        this.ownerFullName = ownerFullName;
+        this.ownerCIN= ownerCIN;
+        this.ownerEmail= ownerEmail;
+        this.phoneNumber= phoneNumber;
+        this.carDescription= carDescription;
+        this.status= status;
+        this.model= model;
+
+    }
+
+    //Chery Cars Constructor
+    public Car(String status, String model, String bodyType, String warrantyDuration,
+               Integer numberOfDoors, Integer numberOfSeats
+    ){
+        this.ownerFullName = ownerFullName;
+        this.ownerCIN= ownerCIN;
+        this.ownerEmail= ownerEmail;
+        this.phoneNumber= phoneNumber;
+        this.carDescription= carDescription;
+        this.status= status;
+        this.model= model;
+        this.bodyType= bodyType;
+        this.warrantyDuration= warrantyDuration;
+        this.numberOfDoors= numberOfDoors;
+        this.numberOfSeats= numberOfSeats;
+
+    }
+
+
+    public Car(String ownerFullName, String ownerCIN, String ownerEmail,String phoneNumber,
+               String carDescription, String status, String model,
+               String bodyType, String warrantyDuration, Integer numberOfDoors, Integer numberOfSeats
+    ){
+        this.ownerFullName = ownerFullName;
+        this.ownerCIN= ownerCIN;
+        this.ownerEmail= ownerEmail;
+        this.phoneNumber= phoneNumber;
+        this.carDescription= carDescription;
+        this.status= status;
+        this.model= model;
+        this.bodyType= bodyType;
+        this.warrantyDuration= warrantyDuration;
+        this.numberOfDoors= numberOfDoors;
+        this.numberOfSeats= numberOfSeats;
+
+    }
+
     public Car(Long id, String ownerFullName, String ownerCIN, String ownerEmail, String carDescription,
                String status, String brand, String model, String year, String bodyPaint, String bodyType,
                String fuelType, Integer numberOfSeats, Double price, Integer numberOfDoors, String warrantyDuration,
@@ -330,9 +385,5 @@ public class Car {
         this.phoneNumber = phoneNumber;
         this.taxHorsepower = taxHorsepower;
         this.transmissionType = transmissionType;
-    }
-
-
-    public Car() {
     }
 }

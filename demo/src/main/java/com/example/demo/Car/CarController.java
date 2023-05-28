@@ -76,8 +76,34 @@ public class CarController {
     }
 
     @PostMapping
-    public void RegisterNewCar(@RequestBody Car car) throws IllegalAccessException {
-        carService.addNewCars(car);
+    public void RegisterNewCar( @RequestParam(required = false) String brand,
+                                @RequestParam(required = false) String model,
+                                @RequestParam(required = false) String year,
+                                @RequestParam(required = false) String bodyPaint,
+                                @RequestParam(required = false) String bodyType,
+                                @RequestParam(required = false) String fuelType,
+                                @RequestParam(required = false) Integer numberOfSeats,
+                                @RequestParam(required = false) Double price,
+                                @RequestParam(required = false) Integer numberOfDoors,
+                                @RequestParam(required = false) String warrantyDuration,
+                                @RequestParam(required = false) Integer width,
+                                @RequestParam(required = false) Integer height,
+                                @RequestParam(required = false) Integer length,
+                                @RequestParam(required = false) Integer fuelTankCapacity,
+                                @RequestParam(required = false) Integer maxSpeed,
+                                @RequestParam(required = false) String acceleration,
+                                @RequestParam(required = false) String fuelConsumption,
+                                @RequestParam(required = false) String ownerFullName,
+                                @RequestParam(required = false) String ownerCIN,
+                                @RequestParam(required = false) String ownerEmail,
+                                @RequestParam(required = false) String carDescription,
+                                @RequestParam(required = false) String status,
+                                @RequestParam(required = false) String phoneNumber,
+                                @RequestParam(name = "image") MultipartFile file) throws IllegalAccessException, IOException {
+        Car car = new Car(ownerFullName,  ownerCIN,  ownerEmail, phoneNumber,
+                carDescription,  status,  model,
+                bodyType,  warrantyDuration,  numberOfDoors,  numberOfSeats);
+        carService.addNewCars(car, file);
     }
 
     @DeleteMapping(path ="{carId}" )
