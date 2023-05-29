@@ -84,12 +84,13 @@ public class CarService {
         return carRepository.findAll();
     }
 
+
     public void addNewCars(Car car, MultipartFile file) throws IllegalAccessException,IOException {
         Optional<Car> carOptional = carRepository.findCarByModel(car.getModel());
         if(carOptional.isPresent()){
             throw new IllegalAccessException("Model car taken");
         }
-        if(car.getStatus() == "USED_CAR"){
+        if(Objects.equals(car.getStatus(), "USED_CAR")){
             carRepository.save(Car.builder().ownerFullName(car.getOwnerFullName())
                     .ownerCIN(car.getOwnerCIN()).phoneNumber(car.getPhoneNumber())
                     .model(car.getModel()).carDescription(car.getCarDescription()).status(car.getStatus())
@@ -98,11 +99,13 @@ public class CarService {
         else {
             carRepository.save(Car.builder().model(car.getModel()).bodyType(car.getBodyType())
                     .numberOfDoors(car.getNumberOfDoors()).numberOfSeats(car.getNumberOfSeats())
-                    .warrantyDuration(car.getWarrantyDuration())
+                    .warrantyDuration(car.getWarrantyDuration()).status(car.getStatus())
                     .carImageData(ImageUtils.compressImage(file.getBytes())).build());
         }
 
     }
+
+
 
     public void deleteCar(Long carId) throws IllegalAccessException {
         boolean exists = carRepository.existsById(carId);

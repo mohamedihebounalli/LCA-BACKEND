@@ -298,6 +298,9 @@ public class Car {
         this.transmission = transmission;
     }
 
+
+
+
     //Used Cars Constructor
     public Car(String ownerFullName, String ownerCIN, String ownerEmail,String phoneNumber,
                String carDescription, String status, String model
@@ -317,11 +320,7 @@ public class Car {
     public Car(String status, String model, String bodyType, String warrantyDuration,
                Integer numberOfDoors, Integer numberOfSeats
     ){
-        this.ownerFullName = ownerFullName;
-        this.ownerCIN= ownerCIN;
-        this.ownerEmail= ownerEmail;
-        this.phoneNumber= phoneNumber;
-        this.carDescription= carDescription;
+
         this.status= status;
         this.model= model;
         this.bodyType= bodyType;
@@ -330,8 +329,6 @@ public class Car {
         this.numberOfSeats= numberOfSeats;
 
     }
-
-
     public Car(String ownerFullName, String ownerCIN, String ownerEmail,String phoneNumber,
                String carDescription, String status, String model,
                String bodyType, String warrantyDuration, Integer numberOfDoors, Integer numberOfSeats
@@ -349,6 +346,9 @@ public class Car {
         this.numberOfSeats= numberOfSeats;
 
     }
+
+
+
 
     public Car(Long id, String ownerFullName, String ownerCIN, String ownerEmail, String carDescription,
                String status, String brand, String model, String year, String bodyPaint, String bodyType,
