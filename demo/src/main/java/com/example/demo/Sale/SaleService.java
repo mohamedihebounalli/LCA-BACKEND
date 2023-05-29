@@ -4,6 +4,8 @@ import com.example.demo.account.Account;
 import com.example.demo.account.AccountRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
@@ -27,25 +29,37 @@ public class SaleService {
     }
 
 
-    public void addNewSale(Sale sale) throws IllegalAccessException {
+    public ResponseEntity<?> addNewSale(Sale sale)   {
         Optional<Sale> saleOptional = saleRepository.findSaleByManufacturer(sale.getManufacturer());
         if(saleOptional.isPresent()){
-            throw new IllegalAccessException("Manufactutrer taken");
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Manufactutrer taken");
         }
         saleRepository.save(sale);
+        return ResponseEntity.ok("Vente enregistré avec succès");
+
     }
 
-    public void deleteSale(Long saleId) throws IllegalAccessException {
+    public ResponseEntity<?> deleteSale(Long saleId){
         boolean exists = saleRepository.existsById(saleId);
         if(!exists){
-            throw new IllegalAccessException("sale with id "+ saleId + " does not exists");
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("la vente n'existe pas");
         }
         saleRepository.deleteById(saleId);
+        return ResponseEntity.ok("la vente supprimé avec succès");
     }
 
     @Transactional
-    public void updateSale(Long saleId, String firstName, String lastName, String manufacturer, String carColor, String  paymentMethod, String price,String ownerCIN) {
-        Sale sale = saleRepository.findById(saleId).orElseThrow(()-> new IllegalStateException("sale with id "+ saleId +" does not exist"));
+    public ResponseEntity<?> updateSale(Long saleId, String firstName, String lastName, String manufacturer,
+                                        String carColor, String  paymentMethod, String price, String ownerCIN) {
+        Optional<Sale> saleOptional = saleRepository.findById(saleId);
+
+        Sale sale;
+        if(saleOptional.isPresent()) {
+            sale = saleOptional.get();
+        }else {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("la vente n'existe pas");
+        }
+
 
         if(firstName != null && firstName.length() > 0 && !Objects.equals(sale.getFirstName(),firstName)){
             sale.setFirstName(firstName);
@@ -69,12 +83,14 @@ public class SaleService {
         }
 
         if(manufacturer != null && manufacturer.length() > 0 && !Objects.equals(sale.getManufacturer(),manufacturer)){
-            Optional<Sale> saleOptional = saleRepository.findSaleByManufacturer(manufacturer);
-            if(saleOptional.isPresent()){
-                throw new IllegalStateException("manufacturer already taken");
+            Optional<Sale> saleOptional1 = saleRepository.findSaleByManufacturer(manufacturer);
+            if(saleOptional1.isPresent()){
+                return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("fabricant déjà pris");
             }
             sale.setManufacturer(manufacturer);
         }
+        return ResponseEntity.ok("La vente a été modifié avec succès");
+
     }
 
     }

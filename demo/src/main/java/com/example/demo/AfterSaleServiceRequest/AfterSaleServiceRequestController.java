@@ -1,6 +1,7 @@
 package com.example.demo.AfterSaleServiceRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -22,18 +23,18 @@ public class AfterSaleServiceRequestController {
     }
 
     @PostMapping
-    public void RegisterNewRequest(@RequestBody AfterSaleServiceRequest request) throws IllegalAccessException {
-        afterSaleServiceRequestService.addNewRequest(request);
+    public ResponseEntity<?> RegisterNewRequest(@RequestBody AfterSaleServiceRequest request)  {
+        return afterSaleServiceRequestService.addNewRequest(request);
     }
 
     @DeleteMapping(path ="{requestId}" )
-    public void deleteRequest(@PathVariable("requestId") Long requestId) throws IllegalAccessException {
-        afterSaleServiceRequestService.deleteRequest(requestId);
+    public ResponseEntity<?> deleteRequest(@PathVariable("requestId") Long requestId){
+        return afterSaleServiceRequestService.deleteRequest(requestId);
     }
 
 
     @PutMapping(path="{requestId}")
-    public void updateRequest(
+    public ResponseEntity<?> updateRequest(
             @PathVariable("requestId") Long requestId,
             @RequestParam(required = false) String CIN,
             @RequestParam(required = false) String firstName,
@@ -42,7 +43,7 @@ public class AfterSaleServiceRequestController {
             @RequestParam(required = false) String registrationNumber,
             @RequestParam(required = false) String description,
             @RequestParam(required = false) String status){
-        afterSaleServiceRequestService.updateRequest(requestId, CIN,firstName, lastName,  manufacturer,  registrationNumber,  description,status );
+        return afterSaleServiceRequestService.updateRequest(requestId, CIN,firstName, lastName,  manufacturer,  registrationNumber,  description,status );
     }
 
 }

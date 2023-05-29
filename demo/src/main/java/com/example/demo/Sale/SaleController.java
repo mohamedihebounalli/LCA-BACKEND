@@ -4,6 +4,7 @@ package com.example.demo.Sale;
 import com.example.demo.account.Account;
 import com.example.demo.account.AccountService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Date;
@@ -25,16 +26,16 @@ public class SaleController {
     }
 
     @PostMapping
-    public void RegisterNewSale(@RequestBody Sale sale) throws IllegalAccessException {
-        saleService.addNewSale(sale);
+    public ResponseEntity<?> RegisterNewSale(@RequestBody Sale sale)  {
+        return saleService.addNewSale(sale);
     }
     @DeleteMapping(path ="{saleId}" )
-    public void deleteSale(@PathVariable("saleId") Long saleId) throws IllegalAccessException {
-        saleService.deleteSale(saleId);
+    public ResponseEntity<?> deleteSale(@PathVariable("saleId") Long saleId) throws IllegalAccessException {
+        return saleService.deleteSale(saleId);
     }
 
     @PutMapping(path="{saleId}")
-    public void updateSale(
+    public ResponseEntity<?> updateSale(
             @PathVariable("saleId") Long saleId,
             @RequestParam(required = false) String firstName,
             @RequestParam(required = false) String lastName,
@@ -43,6 +44,8 @@ public class SaleController {
             @RequestParam(required = false) String  paymentMethod,
             @RequestParam(required = false) String price,
             @RequestParam(required = false) String ownerCIN){
-        saleService.updateSale(saleId,firstName,lastName,manufacturer,carColor,paymentMethod,price,ownerCIN);
+        return saleService.updateSale(saleId,firstName,lastName,manufacturer,carColor,paymentMethod,price,ownerCIN);
+
     }
+
 }

@@ -3,6 +3,8 @@ package com.example.demo.AfterSaleServiceRequest;
 
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -24,26 +26,35 @@ public class AfterSaleServiceRequestService {
         return afterSaleServiceRequestRepository.findAll();
     }
 
-    public void addNewRequest(AfterSaleServiceRequest request) throws IllegalAccessException {
+    public ResponseEntity<?> addNewRequest(AfterSaleServiceRequest request)  {
         Optional<AfterSaleServiceRequest> requestOptional = afterSaleServiceRequestRepository.findAfterSaleServiceRequestByRegistrationNumber(request.getRegistrationNumber());
         if(requestOptional.isPresent()){
-            throw new IllegalAccessException("Registration Number taken");
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Numéro d'enregistrement pris");
         }
         afterSaleServiceRequestRepository.save(request);
+        return ResponseEntity.ok("voiture enregistré avec succès");
     }
 
-    public void deleteRequest(Long requestId) throws IllegalAccessException {
+    public ResponseEntity<?> deleteRequest(Long requestId) {
         boolean exists = afterSaleServiceRequestRepository.existsById(requestId);
         if(!exists){
-            throw new IllegalAccessException("After sale service request with id "+ requestId + " does not exists");
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("La demande de SAV n'existe pas");
         }
         afterSaleServiceRequestRepository.deleteById(requestId);
+        return ResponseEntity.ok("Demande de SAV supprimé avec succès");
+
     }
 
     @Transactional
-    public void updateRequest(Long requestId, String CIN,String firstName, String lastName, String manufacturer, String registrationNumber, String  description,String status) {
-        AfterSaleServiceRequest request = afterSaleServiceRequestRepository.findById(requestId).orElseThrow(()-> new IllegalStateException("Request with id "+ requestId +" does not exist"));
+    public ResponseEntity<?> updateRequest(Long requestId, String CIN, String firstName, String lastName, String manufacturer, String registrationNumber, String  description, String status) {
+        Optional<AfterSaleServiceRequest> requestOptional = afterSaleServiceRequestRepository.findById(requestId);
 
+        AfterSaleServiceRequest request;
+        if(requestOptional.isPresent()) {
+            request = requestOptional.get();
+        }else {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("le demande de service après vente n'existe pas");
+        }
 
         if(CIN != null && CIN.length() > 0 && !Objects.equals(request.getCIN(),CIN)){
             request.setCIN(CIN);
@@ -66,12 +77,13 @@ public class AfterSaleServiceRequestService {
         }
 
         if(registrationNumber != null && registrationNumber.length() > 0 && !Objects.equals(request.getRegistrationNumber(),registrationNumber)){
-            Optional<AfterSaleServiceRequest> requestOptional = afterSaleServiceRequestRepository.findAfterSaleServiceRequestByRegistrationNumber(registrationNumber);
-            if(requestOptional.isPresent()){
-                throw new IllegalStateException("Registration Number already taken");
+            Optional<AfterSaleServiceRequest> requestOptional1 = afterSaleServiceRequestRepository.findAfterSaleServiceRequestByRegistrationNumber(registrationNumber);
+            if(requestOptional1.isPresent()){
+                return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("numéro d'immatriculation déja existe");
             }
             request.setRegistrationNumber(registrationNumber);
         }
+        return ResponseEntity.ok("demande de service après vente a été modifié avec succès");
     }
 
     }

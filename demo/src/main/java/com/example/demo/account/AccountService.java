@@ -2,6 +2,8 @@ package com.example.demo.account;
 
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -27,25 +29,37 @@ public class AccountService {
     }
 
 
-    public void addNewAccount(Account account) throws IllegalAccessException {
+    public ResponseEntity<?> addNewAccount(Account account) {
         Optional<Account> accountOptional = accountRepository.findAccountByEmail(account.getEmail());
         if(accountOptional.isPresent()){
-            throw new IllegalAccessException("email taken");
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("e-mail déja pris");
         }
         accountRepository.save(account);
+        return ResponseEntity.ok("compte enregistré avec succès");
     }
 
-    public void deleteAccount(Long accountId) throws IllegalAccessException {
+    public ResponseEntity<?> deleteAccount(Long accountId){
         boolean exists = accountRepository.existsById(accountId);
         if(!exists){
-            throw new IllegalAccessException("account with id "+ accountId + " does not exists");
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Le compte n'existe pas");
         }
         accountRepository.deleteById(accountId);
+        return ResponseEntity.ok("compte supprimé avec succès");
+
     }
 
     @Transactional
-    public void updateAccount(Long accountId, String firstName, String lastName, LocalDate dateOfBirth, String phoneNumber, String email, String role,String password) {
-    Account account = accountRepository.findById(accountId).orElseThrow(()-> new IllegalStateException("account with id "+ accountId +" does not exist"));
+    public ResponseEntity<?> updateAccount(Long accountId, String firstName, String lastName, LocalDate dateOfBirth, String phoneNumber, String email, String role,String password) {
+    Optional<Account>  accountOptional = accountRepository.findById(accountId);
+
+    Account account;
+
+    if(accountOptional.isPresent()) {
+        account = accountOptional.get();
+    }else {
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("le compte n'existe pas");
+    }
+
     if(firstName != null && firstName.length() > 0 && !Objects.equals(account.getFirstName(),firstName)){
         account.setFirstName(firstName);
     }
@@ -68,12 +82,13 @@ public class AccountService {
         }
 
         if(email != null && email.length() > 0 && !Objects.equals(account.getEmail(),email)){
-            Optional<Account> accountOptional = accountRepository.findAccountByEmail(email);
-            if(accountOptional.isPresent()){
-                throw new IllegalStateException("email already taken");
+            Optional<Account> accountOptional1 = accountRepository.findAccountByEmail(email);
+            if(accountOptional1.isPresent()){
+                return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("email déja existe");
             }
             account.setEmail(email);
         }
+        return ResponseEntity.ok("Le compte a été modifié avec succès");
     }
 
 

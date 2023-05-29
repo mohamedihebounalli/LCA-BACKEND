@@ -4,6 +4,8 @@ package com.example.demo.Car;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -85,11 +87,11 @@ public class CarService {
     }
 
 
-    public void addNewCars(Car car, MultipartFile file) throws IllegalAccessException,IOException {
-        Optional<Car> carOptional = carRepository.findCarByModel(car.getModel());
-        if(carOptional.isPresent()){
-            throw new IllegalAccessException("Model car taken");
-        }
+    public ResponseEntity<?> addNewCars(Car car, MultipartFile file) throws IOException {
+//        Optional<Car> carOptional = carRepository.findCarByModel(car.getModel());
+//        if(carOptional.isPresent()){
+//            throw new IllegalAccessException("Model car taken");
+//        }
         if(Objects.equals(car.getStatus(), "USED_CAR")){
             carRepository.save(Car.builder().ownerFullName(car.getOwnerFullName()).ownerEmail(car.getOwnerEmail())
                     .ownerCIN(car.getOwnerCIN()).phoneNumber(car.getPhoneNumber())
@@ -102,29 +104,39 @@ public class CarService {
                     .warrantyDuration(car.getWarrantyDuration()).status(car.getStatus())
                     .carImageData(ImageUtils.compressImage(file.getBytes())).build());
         }
+        return ResponseEntity.ok("Voiture enregistré avec succès");
 
     }
 
 
 
-    public void deleteCar(Long carId) throws IllegalAccessException {
+    public ResponseEntity<?> deleteCar(Long carId)  {
         boolean exists = carRepository.existsById(carId);
         if(!exists){
-            throw new IllegalAccessException("car with id "+ carId + " does not exists");
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("la voiture n'existe pas");
         }
         carRepository.deleteById(carId);
+        return ResponseEntity.ok("la voiture supprimé avec succès");
+
     }
 
 
     @Transactional
-    public void updateCar(Long carId,String brand,String model,String year,
-                          String bodyPaint,String bodyType,String fuelType,
-                          Integer numberOfSeats,Double price,Integer numberOfDoors,
-                          String warrantyDuration,Integer width,Integer height,Integer length,
-                          Integer fuelTankCapacity, Integer maxSpeed,String acceleration,
-                          String fuelConsumption,String ownerFullName,String ownerCIN,
-                          String ownerEmail,String carDescription,String status ,String phoneNumber) {
-        Car car = carRepository.findById(carId).orElseThrow(()-> new IllegalStateException("car with id "+ carId +" does not exist"));
+    public ResponseEntity<?> updateCar(Long carId, String brand, String model, String year,
+                                       String bodyPaint, String bodyType, String fuelType,
+                                       Integer numberOfSeats, Double price, Integer numberOfDoors,
+                                       String warrantyDuration, Integer width, Integer height, Integer length,
+                                       Integer fuelTankCapacity, Integer maxSpeed, String acceleration,
+                                       String fuelConsumption, String ownerFullName, String ownerCIN,
+                                       String ownerEmail, String carDescription, String status , String phoneNumber) {
+        Optional<Car> carOptional = carRepository.findById(carId);
+        Car car;
+        if(carOptional.isPresent()) {
+            car = carOptional.get();
+        }else {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("le voiture n'existe pas");
+        }
+
         if (brand != null && brand.length() > 0 && !Objects.equals(car.getBrand(), brand)) {
             car.setBrand(brand);
         }
@@ -193,7 +205,6 @@ public class CarService {
             car.setFuelConsumption(fuelConsumption);
         }
 
-
         if (ownerFullName != null && ownerFullName.length() > 0 && !Objects.equals(car.getOwnerFullName(), ownerFullName)) {
             car.setOwnerFullName(ownerFullName);
         }
@@ -216,13 +227,15 @@ public class CarService {
         if (phoneNumber != null && phoneNumber.length() > 0 && !Objects.equals(car.getPhoneNumber(), phoneNumber)) {
             car.setPhoneNumber(phoneNumber);
         }
-        if(model != null && model.length() > 0 && !Objects.equals(car.getModel(),model)){
-            Optional<Car> carOptional = carRepository.findCarByModel(model);
-            if(carOptional.isPresent()){
-                throw new IllegalStateException("model already taken");
-            }
-            car.setModel(model);
-        }
+//        if(model != null && model.length() > 0 && !Objects.equals(car.getModel(),model)){
+//            Optional<Car> carOptional1 = carRepository.findCarByModel(model);
+//            if(carOptional1.isPresent()){
+//                return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("modèle déjà pris");
+//            }
+//            car.setModel(model);
+//        }
+        return ResponseEntity.ok("Le voiture a été modifié avec succès");
+
     }
 
     public List<Car> sortCarListByPrice(String field) {

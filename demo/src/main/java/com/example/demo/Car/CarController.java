@@ -78,7 +78,7 @@ public class CarController {
 
 
     @PostMapping
-    public void RegisterNewCar( @RequestParam(required = false,name = "brand") String brand,
+    public ResponseEntity<?> RegisterNewCar( @RequestParam(required = false,name = "brand") String brand,
                                 @RequestParam(required = false,name = "model") String model,
                                 @RequestParam(required = false,name = "bodyType") String bodyType,
                                 @RequestParam(required = false,name = "numberOfSeats") Integer numberOfSeats,
@@ -91,7 +91,7 @@ public class CarController {
                                 @RequestParam(required = false,name = "carDescription") String carDescription,
                                 @RequestParam(required = false,name = "status") String status,
                                 @RequestParam(required = false,name = "phoneNumber") String phoneNumber,
-                                @RequestParam(name = "image") MultipartFile file) throws IllegalAccessException, IOException {
+                                @RequestParam(name = "image") MultipartFile file) throws IOException {
 
         System.out.println("**************************************Debug***********************");
         System.out.println(ownerCIN);
@@ -112,18 +112,18 @@ public class CarController {
         System.out.println("**************************************Debug Car object***********************");
         System.out.println(car.getCarDescription());
         System.out.println(car.getOwnerEmail());
-        carService.addNewCars(car, file);
+        return carService.addNewCars(car, file);
     }
 
 
 
     @DeleteMapping(path ="{carId}" )
-    public void deleteCar(@PathVariable("carId") Long carId) throws IllegalAccessException {
-        carService.deleteCar(carId);
+    public ResponseEntity<?> deleteCar(@PathVariable("carId") Long carId) {
+        return carService.deleteCar(carId);
     }
 
     @PutMapping(path="{carId}")
-    public void updateCar(
+    public ResponseEntity<?> updateCar(
             @PathVariable("carId") Long carId,
             @RequestParam(required = false) String brand,
             @RequestParam(required = false) String model,
@@ -148,7 +148,7 @@ public class CarController {
             @RequestParam(required = false) String carDescription,
             @RequestParam(required = false) String status,
             @RequestParam(required = false) String phoneNumber){
-        carService.updateCar(
+        return carService.updateCar(
                 carId, brand, model, year, bodyPaint, bodyType, fuelType, numberOfSeats, price, numberOfDoors,
                 warrantyDuration, width, height, length, fuelTankCapacity, maxSpeed, acceleration, fuelConsumption, ownerFullName,  ownerCIN,  ownerEmail,  carDescription,  status,phoneNumber);
     }

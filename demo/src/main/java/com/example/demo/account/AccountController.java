@@ -27,17 +27,17 @@ public class AccountController {
     }
 
     @PostMapping
-    public void RegisterNewAccount(@RequestBody Account account) throws IllegalAccessException {
-        accountService.addNewAccount(account);
+    public ResponseEntity<?> RegisterNewAccount(@RequestBody Account account) {
+        return accountService.addNewAccount(account);
     }
 
     @DeleteMapping(path ="{accountId}" )
-    public void deleteAccount(@PathVariable("accountId") Long accountId) throws IllegalAccessException {
-        accountService.deleteAccount(accountId);
+    public ResponseEntity<?> deleteAccount(@PathVariable("accountId") Long accountId) {
+        return accountService.deleteAccount(accountId);
     }
 
     @PutMapping(path="{accountId}")
-    public void updateAccount(
+    public ResponseEntity<?> updateAccount(
             @PathVariable("accountId") Long accountId,
             @RequestParam(required = false) String firstName,
             @RequestParam(required = false) String lastName,
@@ -46,7 +46,8 @@ public class AccountController {
             @RequestParam(required = false) String email,
             @RequestParam(required = false) String role,
             @RequestParam(required = false) String password){
-        accountService.updateAccount(accountId,firstName,lastName,dateOfBirth,phoneNumber,email,role,password);
+        return accountService.updateAccount(accountId,firstName,lastName,dateOfBirth,phoneNumber,email,role,password);
+
     }
 
     @PostMapping("/login")
