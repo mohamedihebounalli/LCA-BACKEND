@@ -87,22 +87,12 @@ public class CarService {
     }
 
 
-    public ResponseEntity<?> addNewCars(Car car, MultipartFile file) throws IOException {
-//        Optional<Car> carOptional = carRepository.findCarByModel(car.getModel());
-//        if(carOptional.isPresent()){
-//            throw new IllegalAccessException("Model car taken");
-//        }
+    public ResponseEntity<?> addNewCars(Car car) throws IOException {
         if(Objects.equals(car.getStatus(), "USED_CAR")){
-            carRepository.save(Car.builder().ownerFullName(car.getOwnerFullName()).ownerEmail(car.getOwnerEmail())
-                    .ownerCIN(car.getOwnerCIN()).phoneNumber(car.getPhoneNumber())
-                    .model(car.getModel()).carDescription(car.getCarDescription()).status(car.getStatus())
-                    .carImageData(ImageUtils.compressImage(file.getBytes())).build());
+            carRepository.save(car);
         }
         else {
-            carRepository.save(Car.builder().model(car.getModel()).bodyType(car.getBodyType())
-                    .numberOfDoors(car.getNumberOfDoors()).numberOfSeats(car.getNumberOfSeats())
-                    .warrantyDuration(car.getWarrantyDuration()).status(car.getStatus())
-                    .carImageData(ImageUtils.compressImage(file.getBytes())).build());
+            carRepository.save(car);
         }
         return ResponseEntity.ok("Voiture enregistré avec succès");
 

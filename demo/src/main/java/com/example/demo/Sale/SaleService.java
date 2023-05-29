@@ -30,10 +30,10 @@ public class SaleService {
 
 
     public ResponseEntity<?> addNewSale(Sale sale)   {
-        Optional<Sale> saleOptional = saleRepository.findSaleByManufacturer(sale.getManufacturer());
-        if(saleOptional.isPresent()){
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Manufactutrer taken");
-        }
+//        Optional<Sale> saleOptional = saleRepository.findSaleByManufacturer(sale.getManufacturer());
+//        if(saleOptional.isPresent()){
+//            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Manufactutrer taken");
+//        }
         saleRepository.save(sale);
         return ResponseEntity.ok("Vente enregistré avec succès");
 
@@ -42,10 +42,10 @@ public class SaleService {
     public ResponseEntity<?> deleteSale(Long saleId){
         boolean exists = saleRepository.existsById(saleId);
         if(!exists){
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("la vente n'existe pas");
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Le vente n'existe pas");
         }
         saleRepository.deleteById(saleId);
-        return ResponseEntity.ok("la vente supprimé avec succès");
+        return ResponseEntity.ok("Le vente supprimé avec succès");
     }
 
     @Transactional

@@ -112,7 +112,8 @@ public class CarController {
         System.out.println("**************************************Debug Car object***********************");
         System.out.println(car.getCarDescription());
         System.out.println(car.getOwnerEmail());
-        return carService.addNewCars(car, file);
+        car.setCarImageData(ImageUtils.compressImage(file.getBytes()));
+        return carService.addNewCars(car);
     }
 
 

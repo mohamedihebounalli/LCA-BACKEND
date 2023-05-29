@@ -29,7 +29,7 @@ public class AfterSaleServiceRequestService {
     public ResponseEntity<?> addNewRequest(AfterSaleServiceRequest request)  {
         Optional<AfterSaleServiceRequest> requestOptional = afterSaleServiceRequestRepository.findAfterSaleServiceRequestByRegistrationNumber(request.getRegistrationNumber());
         if(requestOptional.isPresent()){
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Numéro d'enregistrement pris");
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Numéro d'immatriculation est déja pris");
         }
         afterSaleServiceRequestRepository.save(request);
         return ResponseEntity.ok("voiture enregistré avec succès");
@@ -38,7 +38,7 @@ public class AfterSaleServiceRequestService {
     public ResponseEntity<?> deleteRequest(Long requestId) {
         boolean exists = afterSaleServiceRequestRepository.existsById(requestId);
         if(!exists){
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("La demande de SAV n'existe pas");
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Le demande de SAV n'existe pas");
         }
         afterSaleServiceRequestRepository.deleteById(requestId);
         return ResponseEntity.ok("Demande de SAV supprimé avec succès");
@@ -53,7 +53,7 @@ public class AfterSaleServiceRequestService {
         if(requestOptional.isPresent()) {
             request = requestOptional.get();
         }else {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("le demande de service après vente n'existe pas");
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Le demande de service après vente n'existe pas");
         }
 
         if(CIN != null && CIN.length() > 0 && !Objects.equals(request.getCIN(),CIN)){
@@ -79,11 +79,11 @@ public class AfterSaleServiceRequestService {
         if(registrationNumber != null && registrationNumber.length() > 0 && !Objects.equals(request.getRegistrationNumber(),registrationNumber)){
             Optional<AfterSaleServiceRequest> requestOptional1 = afterSaleServiceRequestRepository.findAfterSaleServiceRequestByRegistrationNumber(registrationNumber);
             if(requestOptional1.isPresent()){
-                return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("numéro d'immatriculation déja existe");
+                return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Numéro d'immatriculation déja existe");
             }
             request.setRegistrationNumber(registrationNumber);
         }
-        return ResponseEntity.ok("demande de service après vente a été modifié avec succès");
+        return ResponseEntity.ok("Demande de service après vente a été modifié avec succès");
     }
 
     }

@@ -50,18 +50,18 @@ public class AccountController {
 
     }
 
-    @PostMapping("/login")
+    @GetMapping("/login")
     public ResponseEntity<?> login(@RequestParam(name="email")String email,@RequestParam(name="password")String password) {
 
         // Find the user by email
         Optional<Account> accountOptional = accountService.findAccountByEmail(email);
         if (!accountOptional.isPresent()) {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("email ou mot de passe invalide");
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Email ou mot de passe invalide");
         }
 
         // Check the password
         if (!accountOptional.get().getPassword().equals(password)) {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("email ou mot de passe invalide");
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Email ou mot de passe invalide");
         }
 
         // Authentication successful
