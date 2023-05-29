@@ -91,7 +91,7 @@ public class CarService {
             throw new IllegalAccessException("Model car taken");
         }
         if(Objects.equals(car.getStatus(), "USED_CAR")){
-            carRepository.save(Car.builder().ownerFullName(car.getOwnerFullName())
+            carRepository.save(Car.builder().ownerFullName(car.getOwnerFullName()).ownerEmail(car.getOwnerEmail())
                     .ownerCIN(car.getOwnerCIN()).phoneNumber(car.getPhoneNumber())
                     .model(car.getModel()).carDescription(car.getCarDescription()).status(car.getStatus())
                     .carImageData(ImageUtils.compressImage(file.getBytes())).build());
