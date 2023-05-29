@@ -26,6 +26,16 @@ public class Account {
     private String email;
     private String role;
 
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    private String password;
+
     public Account() {
     }
 
@@ -87,7 +97,7 @@ public class Account {
         this.role = role;
     }
 
-    public Account(Long id, String firstName, String lastName, LocalDate dateOfBirth, String phoneNumber, String email, String role) {
+    public Account(Long id, String firstName, String lastName, LocalDate dateOfBirth, String phoneNumber, String email, String role,String password) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -95,5 +105,6 @@ public class Account {
         this.phoneNumber = phoneNumber;
         this.email = email;
         this.role = role;
+        this.password = password;
     }
 }

@@ -44,7 +44,7 @@ public class AccountService {
     }
 
     @Transactional
-    public void updateAccount(Long accountId, String firstName, String lastName, LocalDate dateOfBirth, String phoneNumber, String email, String role) {
+    public void updateAccount(Long accountId, String firstName, String lastName, LocalDate dateOfBirth, String phoneNumber, String email, String role,String password) {
     Account account = accountRepository.findById(accountId).orElseThrow(()-> new IllegalStateException("account with id "+ accountId +" does not exist"));
     if(firstName != null && firstName.length() > 0 && !Objects.equals(account.getFirstName(),firstName)){
         account.setFirstName(firstName);
@@ -58,6 +58,10 @@ public class AccountService {
         if(role != null && role.length() > 0 && !Objects.equals(account.getRole(),role)){
             account.setRole(role);
         }
+        if(password != null && password.length() > 0 && !Objects.equals(account.getPassword(),password)){
+            account.setPassword(password);
+        }
+
 
         if (dateOfBirth != null && !Objects.equals(account.getDateOfBirth(), dateOfBirth)) {
             account.setDateOfBirth(dateOfBirth);
@@ -70,5 +74,10 @@ public class AccountService {
             }
             account.setEmail(email);
         }
+    }
+
+
+    public Optional<Account> findAccountByEmail(String email) {
+        return accountRepository.findAccountByEmail(email);
     }
 }

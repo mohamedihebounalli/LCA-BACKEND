@@ -1,12 +1,15 @@
 package com.example.demo.account;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/v1/account")
@@ -41,8 +44,27 @@ public class AccountController {
             @RequestParam(required = false) LocalDate dateOfBirth,
             @RequestParam(required = false) String phoneNumber,
             @RequestParam(required = false) String email,
-            @RequestParam(required = false) String role){
-        accountService.updateAccount(accountId,firstName,lastName,dateOfBirth,phoneNumber,email,role);
+            @RequestParam(required = false) String role,
+            @RequestParam(required = false) String password){
+        accountService.updateAccount(accountId,firstName,lastName,dateOfBirth,phoneNumber,email,role,password);
+    }
+
+    @PostMapping("/login")
+    public ResponseEntity<?> login(@RequestParam(name="email")String email,@RequestParam(name="password")String password) {
+
+        // Find the user by email
+        Optional<Account> accountOptional = accountService.findAccountByEmail(email);
+        if (!accountOptional.isPresent()) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("email ou mot de passe invalide");
+        }
+
+        // Check the password
+        if (!accountOptional.get().getPassword().equals(password)) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("email ou mot de passe invalide");
+        }
+
+        // Authentication successful
+        return ResponseEntity.ok("Connexion réussie");
     }
 
 }
