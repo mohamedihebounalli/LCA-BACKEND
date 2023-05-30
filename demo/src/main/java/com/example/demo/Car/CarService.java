@@ -118,13 +118,18 @@ public class CarService {
                                        String warrantyDuration, Integer width, Integer height, Integer length,
                                        Integer fuelTankCapacity, Integer maxSpeed, String acceleration,
                                        String fuelConsumption, String ownerFullName, String ownerCIN,
-                                       String ownerEmail, String carDescription, String status , String phoneNumber) {
+                                       String ownerEmail, String carDescription, String status ,
+                                       String phoneNumber, MultipartFile file) throws IOException {
         Optional<Car> carOptional = carRepository.findById(carId);
         Car car;
         if(carOptional.isPresent()) {
             car = carOptional.get();
         }else {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("le voiture n'existe pas");
+        }
+
+        if (file != null && !Objects.equals(car.getCarImageData(), ImageUtils.compressImage(file.getBytes()))) {
+            car.setCarImageData(ImageUtils.compressImage(file.getBytes()));
         }
 
         if (brand != null && brand.length() > 0 && !Objects.equals(car.getBrand(), brand)) {

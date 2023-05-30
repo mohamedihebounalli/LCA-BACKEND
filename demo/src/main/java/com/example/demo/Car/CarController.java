@@ -107,7 +107,7 @@ public class CarController {
 
         }else{
             car = new Car(status,  model,
-                    bodyType,  warrantyDuration,  numberOfDoors,  numberOfSeats);
+                    bodyType,  warrantyDuration,  numberOfDoors,  numberOfSeats, price);
         }
         System.out.println("**************************************Debug Car object***********************");
         System.out.println(car.getCarDescription());
@@ -148,10 +148,13 @@ public class CarController {
             @RequestParam(required = false) String ownerEmail,
             @RequestParam(required = false) String carDescription,
             @RequestParam(required = false) String status,
-            @RequestParam(required = false) String phoneNumber){
+            @RequestParam(required = false) String phoneNumber,
+            @RequestParam(required = false,name = "image") MultipartFile file
+            ) throws IOException{
         return carService.updateCar(
                 carId, brand, model, year, bodyPaint, bodyType, fuelType, numberOfSeats, price, numberOfDoors,
-                warrantyDuration, width, height, length, fuelTankCapacity, maxSpeed, acceleration, fuelConsumption, ownerFullName,  ownerCIN,  ownerEmail,  carDescription,  status,phoneNumber);
+                warrantyDuration, width, height, length, fuelTankCapacity, maxSpeed, acceleration, fuelConsumption,
+                ownerFullName,  ownerCIN,  ownerEmail,  carDescription,  status,phoneNumber, file);
     }
 
 

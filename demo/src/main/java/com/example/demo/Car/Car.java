@@ -318,7 +318,7 @@ public class Car {
 
     //Chery Cars Constructor
     public Car(String status, String model, String bodyType, String warrantyDuration,
-               Integer numberOfDoors, Integer numberOfSeats
+               Integer numberOfDoors, Integer numberOfSeats, Double price
     ){
 
         this.status= status;
@@ -327,6 +327,7 @@ public class Car {
         this.warrantyDuration= warrantyDuration;
         this.numberOfDoors= numberOfDoors;
         this.numberOfSeats= numberOfSeats;
+        this.price = price;
 
     }
     public Car(String ownerFullName, String ownerCIN, String ownerEmail,String phoneNumber,

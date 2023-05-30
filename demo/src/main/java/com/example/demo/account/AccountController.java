@@ -66,7 +66,6 @@ public class AccountController {
 
         // Authentication successful
         return ResponseEntity.status(HttpStatus.OK).body(accountOptional.get().getRole());
-
     }
 
 }

@@ -32,7 +32,7 @@ public class AfterSaleServiceRequestService {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Numéro d'immatriculation est déja pris");
         }
         afterSaleServiceRequestRepository.save(request);
-        return ResponseEntity.ok("voiture enregistré avec succès");
+        return ResponseEntity.ok("demande d'achat enregistré avec succès");
     }
 
     public ResponseEntity<?> deleteRequest(Long requestId) {
